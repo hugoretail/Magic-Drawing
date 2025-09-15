@@ -1,0 +1,1 @@
+#file validations, Pillow/NumPy conversions, EXIF orientation

@@ -1,0 +1,1 @@
+#k-means or Pillow quantization to K colors

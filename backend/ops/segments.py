@@ -1,0 +1,1 @@
+#label map per pixel, connected components, min-area filter
