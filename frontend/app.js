@@ -38,6 +38,8 @@ async function onSubmit(e) {
   params.set('max_size', document.getElementById('max_size').value || '1024');
   params.set('thickness', document.getElementById('thickness').value || '2');
   params.set('min_area', document.getElementById('min_area').value || '80');
+  params.set('merge_area', document.getElementById('merge_area').value || '200');
+  params.set('outline_mode', document.getElementById('outline_mode').value || 'union');
   params.set('include_preview', document.getElementById('include_preview').checked ? 'true' : 'false');
   params.set('return_pdf', 'false');
 

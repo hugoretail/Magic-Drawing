@@ -37,6 +37,17 @@
               <label for="min_area">Surface min région</label>
               <input id="min_area" type="number" min="1" max="10000" value="80" />
             </div>
+            <div>
+              <label for="merge_area">Surface min fusion</label>
+              <input id="merge_area" type="number" min="1" max="100000" value="200" />
+            </div>
+            <div>
+              <label for="outline_mode">Contours</label>
+              <select id="outline_mode">
+                <option value="union" selected>Union (labels + canny)</option>
+                <option value="labels">Labels uniquement</option>
+              </select>
+            </div>
           </div>
           <div class="row">
             <label class="check">

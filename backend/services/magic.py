@@ -16,7 +16,7 @@ from backend.ops.outline import outline_edges
 from backend.ops.render import compose_worksheet, draw_numbers, labels_viz
 from backend.api.schemas import ConvertRequestOptions, ConvertResponse, ImageMeta
 from backend.ops.quantize import quantize_bgr_kmeans
-from backend.ops.segments import extract_regions
+from backend.ops.segments import extract_regions, median_smooth_labels, merge_micro_regions, outline_from_labels
 from backend.ops.placing import place_numbers
 
 
@@ -30,9 +30,18 @@ def convert_image_bytes_to_worksheet(data: bytes, opts: ConvertRequestOptions) -
 
 	#3) color quantization (preview)
 	q_bgr, labels, palette = quantize_bgr_kmeans(img, max(2, min(24, opts.colors)))
+	# 3b) label smoothing + merge of micro-regions
+	labels = median_smooth_labels(labels, ksize=3)
+	labels = merge_micro_regions(labels, min_area=opts.merge_area)
 
-	#4) outline detection
-	edges = outline_edges(img, thickness=opts.thickness)
+	#4) outlines
+	labels_edges = outline_from_labels(labels, thickness=opts.thickness)
+	if (opts.outline_mode or "union").lower() == "union":
+		canny_edges = outline_edges(img, thickness=opts.thickness)
+		import cv2
+		edges = cv2.bitwise_or(labels_edges, canny_edges)
+	else:
+		edges = labels_edges
 
 	#5) render worksheet (white + outline)
 	worksheet = compose_worksheet(edges, (h, w, 3))
@@ -47,7 +56,7 @@ def convert_image_bytes_to_worksheet(data: bytes, opts: ConvertRequestOptions) -
 	preview_png = encode_png_base64(q_bgr) if opts.include_preview else None
 	labels_img = labels_viz(labels, palette)
 	labels_png = encode_png_base64(labels_img) if opts.include_preview else None
-	meta = ImageMeta(width=w, height=h, colors=int(palette.shape[0]), num_regions=0)
+	meta = ImageMeta(width=w, height=h, colors=int(palette.shape[0]), num_regions=len(regions))
 	return ConvertResponse(
 		worksheet_png=worksheet_png,
 		preview_png=preview_png,

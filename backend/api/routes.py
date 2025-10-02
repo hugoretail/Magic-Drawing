@@ -23,6 +23,8 @@ async def magic_convert(
 	max_size: int = Query(1024, ge=128, le=4096),
 	thickness: int = Query(2, ge=1, le=10),
 	min_area: int = Query(80, ge=1, le=10000),
+	merge_area: int = Query(200, ge=1, le=100000),
+	outline_mode: str = Query("union", pattern="^(labels|union)$"),
 	include_preview: bool = Query(True),
 	return_pdf: bool = Query(False),
 ):
@@ -37,6 +39,8 @@ async def magic_convert(
 			max_size=max_size,
 			thickness=thickness,
 			min_area=min_area,
+			merge_area=merge_area,
+			outline_mode=outline_mode,
 			include_preview=include_preview,
 			return_pdf=return_pdf,
 		)

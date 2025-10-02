@@ -11,8 +11,9 @@ Notes on defaults and ranges we enforce:
 """
 
 from __future__ import annotations
-
+	
 from typing import Optional, Annotated
+from typing import Literal
 from pydantic import BaseModel, Field
 
 #just to list the classes
@@ -30,6 +31,8 @@ class ConvertRequestOptions(BaseModel):
 	max_size: Annotated[int, Field(1024, ge=128, le=4096, description="Max image side after downscaling to control runtime and memory.")]
 	thickness: Annotated[int, Field(2, ge=1, le=10, description="Outline thickness in pixels.")]
 	min_area: Annotated[int, Field(80, ge=1, le=10000, description="Minimum region area in px^2 to receive a number.")]
+	merge_area: Annotated[int, Field(200, ge=1, le=100000, description="Minimum area (px^2) to keep as a standalone region; smaller connected components will be merged into a neighboring label before numbering.")]
+	outline_mode: Annotated[str, Field("union", description="Outline generation strategy: 'labels' for only label boundaries, or 'union' for union(labels, canny).")]
 	include_preview: bool = Field(True, description="Include color preview image in response.")
 	return_pdf: bool = Field(False, description="Also return a PDF (if supported/enabled).")
 
