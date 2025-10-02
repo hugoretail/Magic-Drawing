@@ -71,13 +71,13 @@ function renderResults(data) {
   const lbImg = document.getElementById('labels_img');
   const meta = document.getElementById('meta');
 
-  // Worksheet
+  //worksheet
   if (data.worksheet_png) {
     wsImg.src = `data:image/png;base64,${data.worksheet_png}`;
     document.getElementById('dl_worksheet').onclick = () => downloadBase64('worksheet.png', data.worksheet_png);
   }
 
-  // Preview
+  //preview
   if (data.preview_png) {
     pvImg.src = `data:image/png;base64,${data.preview_png}`;
     document.getElementById('dl_preview').onclick = () => downloadBase64('preview.png', data.preview_png);
@@ -85,7 +85,7 @@ function renderResults(data) {
     pvImg.removeAttribute('src');
   }
 
-  // Labels
+  //labels
   if (data.labels_png) {
     lbImg.src = `data:image/png;base64,${data.labels_png}`;
     document.getElementById('dl_labels').onclick = () => downloadBase64('labels.png', data.labels_png);
