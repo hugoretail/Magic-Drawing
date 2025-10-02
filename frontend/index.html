@@ -22,35 +22,47 @@
           </div>
           <div class="grid">
             <div>
-              <label for="colors">Couleurs (2..24)</label>
+              <label for="colors">Couleurs (2..24)
+                <span class="help" title="Nombre de couleurs dans la quantification. Plus bas = zones plus grandes et coloriage plus simple; plus haut = plus de détails mais zones plus petites. Plage: 2 à 24. Astuce: 5–12 convient souvent, 2–4 pour très jeune public.">ℹ</span>
+              </label>
               <input id="colors" type="number" min="2" max="24" value="9" />
             </div>
             <div>
-              <label for="max_size">Taille max (128..4096)</label>
+              <label for="max_size">Taille max (128..4096)
+                <span class="help" title="Redimensionne l'image pour limiter le temps de calcul et la mémoire. Plus bas = plus rapide, moins de détails; plus haut = plus lent, plus fin. 1024 est un bon compromis sur la plupart des images.">ℹ</span>
+              </label>
               <input id="max_size" type="number" min="128" max="4096" value="1024" />
             </div>
             <div>
-              <label for="thickness">Épaisseur contour (1..10)</label>
+              <label for="thickness">Épaisseur contour (1..10)
+                <span class="help" title="Contrôle l'épaisseur du trait de contour final (labels et/ou Canny). Plus épais = plus lisible, masque des micro-trous; trop élevé peut coller des zones voisines.">ℹ</span>
+              </label>
               <input id="thickness" type="number" min="1" max="10" value="2" />
             </div>
             <div>
-              <label for="min_area">Surface min région</label>
+              <label for="min_area">Surface min région
+                <span class="help" title="Seuil d'affichage des numéros: les régions en-dessous ne seront pas numérotées (mais existent encore). Laisse 80 par défaut; augmente si trop de petits chiffres apparaissent.">ℹ</span>
+              </label>
               <input id="min_area" type="number" min="1" max="10000" value="80" />
             </div>
             <div>
-              <label for="merge_area">Surface min fusion</label>
+              <label for="merge_area">Surface min fusion
+                <span class="help" title="Nettoyage de la carte de couleurs: fusionne les micro-îlots dont l'aire est sous ce seuil vers la couleur voisine dominante. Plus haut = plus lisse et zones plus grandes. Valeur typique à 1024px: 150–400.">ℹ</span>
+              </label>
               <input id="merge_area" type="number" min="1" max="100000" value="200" />
             </div>
             <div>
-              <label for="outline_mode">Contours</label>
-              <select id="outline_mode">
+              <label for="outline_mode">Contours
+                <span class="help" title="'Union' combine contours de couleurs (fermés) et bords photo (Canny) pour garder du détail. 'Labels' utilise seulement les frontières de couleurs pour garantir des formes fermées et simples.">ℹ</span>
+              </label>
+              <select id="outline_mode" title="Union: fermetures garanties + détails photo. Labels: contours fermés plus simples.">
                 <option value="union" selected>Union (labels + canny)</option>
                 <option value="labels">Labels uniquement</option>
               </select>
             </div>
           </div>
           <div class="row">
-            <label class="check">
+            <label class="check" title="Ajoute à la réponse l'image quantifiée (preview) et la visualisation des labels (debug). Utile pour évaluer les paramètres; peut alourdir la réponse.">
               <input id="include_preview" type="checkbox" checked /> Inclure les previews
             </label>
           </div>
