@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Magic Drawing - Frontend</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Magic Drawing</h1>
+      <p>Convertis une image en "Coloriage Magique"</p>
+    </header>
+
+    <main>
+      <section class="card">
+        <h2>1) Importer et configurer</h2>
+        <form id="convert-form">
+          <div class="row">
+            <label>Image</label>
+            <input id="file" name="file" type="file" accept="image/*" required />
+          </div>
+          <div class="grid">
+            <div>
+              <label for="colors">Couleurs (2..24)</label>
+              <input id="colors" type="number" min="2" max="24" value="9" />
+            </div>
+            <div>
+              <label for="max_size">Taille max (128..4096)</label>
+              <input id="max_size" type="number" min="128" max="4096" value="1024" />
+            </div>
+            <div>
+              <label for="thickness">Épaisseur contour (1..10)</label>
+              <input id="thickness" type="number" min="1" max="10" value="2" />
+            </div>
+            <div>
+              <label for="min_area">Surface min région</label>
+              <input id="min_area" type="number" min="1" max="10000" value="80" />
+            </div>
+          </div>
+          <div class="row">
+            <label class="check">
+              <input id="include_preview" type="checkbox" checked /> Inclure les previews
+            </label>
+          </div>
+          <div class="row">
+            <button type="submit" id="submit">Générer</button>
+            <span id="status" class="status"></span>
+          </div>
+        </form>
+      </section>
+
+      <section class="card" id="results" hidden>
+        <h2>2) Résultats</h2>
+        <div class="grid3">
+          <div>
+            <h3>Worksheet</h3>
+            <img id="worksheet_img" alt="Worksheet" />
+            <div class="row">
+              <button id="dl_worksheet">Télécharger</button>
+            </div>
+          </div>
+          <div>
+            <h3>Preview</h3>
+            <img id="preview_img" alt="Preview quantifiée" />
+            <div class="row">
+              <button id="dl_preview">Télécharger</button>
+            </div>
+          </div>
+          <div>
+            <h3>Labels (debug)</h3>
+            <img id="labels_img" alt="Labels" />
+            <div class="row">
+              <button id="dl_labels">Télécharger</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="meta"></div>
+      </section>
+    </main>
+
+    <footer>
+      <small>API: http://127.0.0.1:8000 — Front minimal sans framework</small>
+    </footer>
+
+    <script src="./app.js"></script>
+  </body>
+  </html>
