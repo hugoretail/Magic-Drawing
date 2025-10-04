@@ -6,12 +6,12 @@
    <tr>
       <th>Original input</th>
       <th>Worksheet (B/W with numbers)</th>
-      <th>Colored result</th>
+      <th>Colored result (4 colors)</th>
    </tr>
    <tr>
       <td><img src="img/chicken_joe.jpg" alt="Original chicken" width="280"></td>
       <td><img src="img/outlined_chicken.png" alt="Worksheet outline" width="280"></td>
-      <td><img src="img/colored_chicken.png" alt="Colored result" width="280"></td>
+      <td><img src="img/colored_chicken.png" alt="Colored result (4 colors)" width="280"></td>
    </tr>
    <tr>
       <td align="center"><em>chicken_joe.jpg</em></td>
