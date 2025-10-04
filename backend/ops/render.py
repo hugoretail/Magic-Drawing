@@ -54,3 +54,47 @@ def labels_viz(label_map: np.ndarray, palette_bgr: np.ndarray | None = None) -> 
 		pal_len = pal.shape[0]
 		indexed = np.clip(label_map, 0, pal_len - 1)
 		return pal[indexed]
+
+
+def legend_viz(palette_bgr: np.ndarray, box_size: int = 40, font_scale: float = 0.7, thickness: int = 2) -> np.ndarray:
+	import cv2
+	K = palette_bgr.shape[0]
+	margin = 16
+	width = box_size * K + margin * 2
+	height = box_size + 40
+	canvas = np.full((height, width, 3), 255, dtype=np.uint8)
+	for i in range(K):
+		color = tuple(int(x) for x in palette_bgr[i])
+		x = margin + i * box_size
+		y = margin
+		cv2.rectangle(canvas, (x, y), (x + box_size - 1, y + box_size - 1), color, -1)
+		cv2.rectangle(canvas, (x, y), (x + box_size - 1, y + box_size - 1), (0, 0, 0), 1)
+		text = str(i + 1)
+		(text_w, text_h), baseline = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, font_scale, thickness)
+		text_x = x + (box_size - text_w) // 2
+		text_y = y + box_size + text_h + 2
+		cv2.putText(canvas, text, (text_x, text_y), cv2.FONT_HERSHEY_SIMPLEX, font_scale, (0, 0, 0), thickness, cv2.LINE_AA)
+	title = ""
+	(text_w, text_h), baseline = cv2.getTextSize(title, cv2.FONT_HERSHEY_SIMPLEX, 0.8, 2)
+	title_x = (width - text_w) // 2
+	title_y = margin - 4 + text_h
+	cv2.putText(canvas, title, (title_x, title_y), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 0), 2, cv2.LINE_AA)
+	return canvas
+
+
+def overlay_legend_on_worksheet(worksheet: np.ndarray, legend: np.ndarray, margin: int = 12, alpha: float = 0.95) -> np.ndarray:
+	h, w = worksheet.shape[:2]
+	lh, lw = legend.shape[:2]
+	max_lw = min(w // 2, lw)
+	max_lh = min(h // 4, lh)
+	if lw > max_lw or lh > max_lh:
+		import cv2
+		legend = cv2.resize(legend, (max_lw, max_lh), interpolation=cv2.INTER_AREA)
+		lh, lw = legend.shape[:2]
+	x0 = w - lw - margin
+	y0 = margin
+	roi = worksheet[y0:y0+lh, x0:x0+lw]
+	blended = (roi * (1 - alpha) + legend * alpha).astype(np.uint8)
+	worksheet_out = worksheet.copy()
+	worksheet_out[y0:y0+lh, x0:x0+lw] = blended
+	return worksheet_out

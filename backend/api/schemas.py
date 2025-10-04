@@ -50,9 +50,10 @@ class ConvertResponse(BaseModel):
 	Images are base64-encoded PNGs, so the frontend can easily render or download them.
 	"""
 
-	worksheet_png: str = Field(..., description="Base64-encoded PNG of the worksheet (numbers + outline).")
+	worksheet_png: str = Field(..., description="Base64-encoded PNG of the worksheet (numbers + outline + legend).")
 	preview_png: Optional[str] = Field(None, description="Base64-encoded PNG of the quantized preview (optional).")
 	labels_png: Optional[str] = Field(None, description="Base64-encoded PNG of the label map (optional/debug).")
+	legend_png: Optional[str] = Field(None, description="Base64-encoded PNG of the color legend (numbers and colors).")
 	meta: ImageMeta
 
 
