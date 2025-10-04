@@ -5,7 +5,7 @@
 <table>
    <tr>
       <th>Original input</th>
-      <th>Worksheet (B/W with numbers)</th>
+      <th>Worksheet (B/W with numbers + legend)</th>
       <th>Colored result (4 colors)</th>
    </tr> 
    <tr>
